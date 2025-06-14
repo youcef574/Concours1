@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة YouZinElegancia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 مسابقة YouZinElegancia</h1>
+            <p>اشترك في مسابقتنا الرائعة واربح جوائز مميزة! املأ النموذج أدناه للمشاركة.</p>
+        </div>
+
+        <form id="contestForm" action="https://formsubmit.co/bakyoucef@gmail.com" method="POST">
+            <!-- Hidden fields for FormSubmit configuration -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="javascript:void(0)">
+            <input type="hidden" name="_subject" value="🏆 مشترك جديد في مسابقة YouZinElegancia">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_autoresponse" value="شكراً لمشاركتك في مسابقة YouZinElegancia! تم استلام بياناتك بنجاح.">
+
+            <div class="form-group">
+                <label for="facebook_name">الاسم على فيسبوك <span class="required">*</span></label>
+                <input type="text" id="facebook_name" name="facebook_name" required 
+                       placeholder="أدخل اسمك كما يظهر على فيسبوك">
+            </div>
+
+            <div class="form-group">
+                <label for="shoe_size">مقاس الحذاء <span class="required">*</span></label>
+                <input type="number" id="shoe_size" name="shoe_size" required min="35" max="50" 
+                       placeholder="مثال: 42">
+            </div>
+
+            <div class="form-group">
+                <label for="invited_friends">عدد الأصدقاء المدعوين للإعجاب بالصفحة <span class="required">*</span></label>
+                <input type="number" id="invited_friends" name="invited_friends" required min="0" 
+                       placeholder="أدخل عدد الأصدقاء الذين دعوتهم">
+            </div>
+
+            <div class="form-group">
+                <label for="email">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required 
+                       placeholder="example@email.com">
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                🚀 إرسال المشاركة
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>جاري الإرسال...</p>
+            </div>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            <h3>🎉 مبروك! تم إرسال مشاركتك بنجاح!</h3>
+            <p>✅ شكرًا لك على المشاركة في مسابقة YouZinElegancia</p>
+            <p>📧 ستصلك رسالة تأكيد على بريدك الإلكتروني قريباً</p>
+            <p>🏆 سيتم الإعلان عن النتائج قريباً، حظ موفق!</p>
+            <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+                <small>💡 تابع صفحة YouZinElegancia على فيسبوك لمتابعة أخبار المسابقة</small>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 YouZinElegancia - جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            
+            // Send to FormSubmit
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                
+                if (response.ok) {
+                    // Hide form and show success message
+                    this.style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } else {
+                    throw new Error('فشل في الإرسال');
+                }
+            })
+            .catch(error => {
+                // Hide loading and show error
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'block';
+                alert('حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.');
+                console.error('Error:', error);
+            });
+        });
+
+        // Form validation
+        document.getElementById('shoe_size').addEventListener('input', function() {
+            const value = parseInt(this.value);
+            if (value < 35 || value > 50) {
+                this.setCustomValidity('يجب أن يكون مقاس الحذاء بين 35 و 50');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        document.getElementById('invited_friends').addEventListener('input', function() {
+            const value = parseInt(this.value);
+            if (value < 0) {
+                this.setCustomValidity('عدد الأصدقاء لا يمكن أن يكون سالبًا');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        // Add animations on input focus
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform 0.2s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
