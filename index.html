@@ -108,6 +108,12 @@
             transform: translateY(0);
         }
 
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .success-message {
             display: none;
             background: linear-gradient(45deg, #56ab2f, #a8e6cf);
@@ -118,6 +124,17 @@
             text-align: center;
             font-weight: 600;
             animation: slideIn 0.5s ease;
+        }
+
+        .error-message {
+            display: none;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
         }
 
         @keyframes slideIn {
@@ -177,6 +194,20 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .warning-box strong {
+            color: #d63031;
+        }
     </style>
 </head>
 <body>
@@ -189,10 +220,9 @@
         <form id="contestForm" action="https://formsubmit.co/bakyoucef@gmail.com" method="POST">
             <!-- Hidden fields for FormSubmit configuration -->
             <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="javascript:void(0)">
+            <input type="hidden" name="_next" value="">
             <input type="hidden" name="_subject" value="🏆 مشترك جديد في مسابقة YouZinElegancia">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_autoresponse" value="شكراً لمشاركتك في مسابقة YouZinElegancia! تم استلام بياناتك بنجاح.">
 
             <div class="form-group">
                 <label for="facebook_name">الاسم على فيسبوك <span class="required">*</span></label>
@@ -238,6 +268,11 @@
             </div>
         </div>
 
+        <div class="error-message" id="errorMessage">
+            <h3>❌ حدث خطأ!</h3>
+            <p>لم يتم إرسال المشاركة. يرجى المحاولة مرة أخرى أو التحقق من صحة البيانات.</p>
+        </div>
+
         <div class="footer">
             <p>© 2025 YouZinElegancia - جميع الحقوق محفوظة</p>
         </div>
@@ -247,21 +282,34 @@
         document.getElementById('contestForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Show loading state
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('loading').style.display = 'block';
+            // Check if email is still placeholder
+            const action = this.getAttribute('action');
+            if (action.includes('ضع_بريدك_هنا') || action.includes('your-email@example.com')) {
+                alert('❌ خطأ: يجب تعديل البريد الإلكتروني في الكود أولاً!\n\nيرجى استبدال "ضع_بريدك_هنا@gmail.com" ببريدك الحقيقي.');
+                return;
+            }
             
-            // Collect form data
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الإرسال...';
+            loading.style.display = 'block';
+            
+            // Create FormData
             const formData = new FormData(this);
             
             // Send to FormSubmit
             fetch(this.action, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
             })
             .then(response => {
-                // Hide loading
-                document.getElementById('loading').style.display = 'none';
+                loading.style.display = 'none';
                 
                 if (response.ok) {
                     // Hide form and show success message
@@ -272,11 +320,18 @@
                 }
             })
             .catch(error => {
-                // Hide loading and show error
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('submitBtn').style.display = 'block';
-                alert('حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.');
                 console.error('Error:', error);
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 إرسال المشاركة';
+                
+                // Show error message
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                // Auto hide error after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 5000);
             });
         });
 
